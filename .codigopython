@@ -1,0 +1,80 @@
+contas_bancarias = []
+
+def nova_conta():
+    nome = input("Digite o nome da conta: ")
+    saldo = float(input("Digite o saldo inicial da conta: "))
+    usuario = input("Digite o nome do titular da conta: ")
+    
+    conta = {"nome": nome, "saldo": saldo, "usuario": usuario}
+    contas_bancarias.append(conta)
+    print("Conta criada com sucesso!")
+
+def listar_contas():
+    print("Lista de contas bancárias:")
+    for index, conta in enumerate(contas_bancarias, 1):
+        print(f"{index}. Nome: {conta['nome']}, Saldo: R${conta['saldo']:.2f}, Titular: {conta['usuario']}")
+
+def depositar():
+    listar_contas()
+    num_conta = int(input("Digite o número da conta para depositar: "))
+    valor = float(input("Digite o valor a ser depositado: "))
+    
+    conta = contas_bancarias[num_conta - 1]
+    conta['saldo'] += valor
+    print(f"Depósito de R${valor:.2f} realizado com sucesso na conta de {conta['usuario']}.")
+
+def sacar():
+    listar_contas()
+    num_conta = int(input("Digite o número da conta para sacar: "))
+    valor = float(input("Digite o valor a ser sacado: "))
+    
+    conta = contas_bancarias[num_conta - 1]
+    if conta['saldo'] >= valor:
+        conta['saldo'] -= valor
+        print(f"Saque de R${valor:.2f} realizado com sucesso da conta de {conta['usuario']}.")
+    else:
+        print("Saldo insuficiente para realizar o saque.")
+        
+def extrato():
+    listar_contas()
+    num_conta = int(input("Digite o número da conta para ver o extrato: "))
+    
+    conta = contas_bancarias[num_conta - 1]
+    print(f"Extrato da conta de {conta['usuario']}: Saldo: R${conta['saldo']:.2f}")
+
+def novo_usuario():
+    novo_usuario = input("Digite o nome do novo usuário: ")
+    print(f"Novo usuário '{novo_usuario}' adicionado ao sistema bancário!")
+
+def main():
+    while True:
+        print("\nOpções:")
+        print("[d] Depositar")
+        print("[s] Sacar")
+        print("[e] Extrato")
+        print("[nc] Nova conta")
+        print("[lc] Listar contas")
+        print("[nu] Novo usuário")
+        print("[q] Sair")
+
+        opcao = input("Digite a opção desejada: ")
+
+        if opcao == "d":
+            depositar()
+        elif opcao == "s":
+            sacar()
+        elif opcao == "e":
+            extrato()
+        elif opcao == "nc":
+            nova_conta()
+        elif opcao == "lc":
+            listar_contas()
+        elif opcao == "nu":
+            novo_usuario()
+        elif opcao == "q":
+            print("Saindo do sistema bancário.")
+            break
+        else:
+            print("Opção inválida. Digite novamente.")
+
+main()
